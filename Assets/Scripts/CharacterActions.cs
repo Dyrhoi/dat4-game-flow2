@@ -50,7 +50,7 @@ public class CharacterActions : MonoBehaviour
             _gameState.PickUpCoin(fCollider.gameObject);
         }
         
-        Debug.Log("New score: " + _gameState.GetCoins());
+        Debug.Log("Score: " + _gameState.GetCoins());
     }
 
     private void OnTriggerEnter(Collider other)
