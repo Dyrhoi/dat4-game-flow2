@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -80,13 +84,16 @@ public class CharacterMovement : MonoBehaviour
 
     void HandleRotation()
     {
-        Vector3 currentPosition = transform.position;
         Vector3 newPosition = new Vector3(_currentMovement.x, 0, _currentMovement.y);
-        
-        var targetRotation = Quaternion.LookRotation(newPosition);
-       
-// Smoothly rotate towards the target point.
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+
+        if (newPosition != Vector3.zero)
+        {
+            var targetRotation = Quaternion.LookRotation(newPosition);
+
+            // Smoothly rotate towards the target point.
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+        }
     }
 
     private void OnEnable()
