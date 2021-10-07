@@ -14,6 +14,8 @@ public class CharacterActions : MonoBehaviour
     private BoxCollider _collider;
 
     private List<Collider> _colliders = new List<Collider>();
+
+    private GameState _gameState;
     
     private void Awake()
     {
@@ -36,6 +38,8 @@ public class CharacterActions : MonoBehaviour
         _pickItemHash = Animator.StringToHash("pickItem");
 
         _collider = GetComponent<BoxCollider>();
+
+        _gameState = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameState>();
     }
 
     void PickUpItem()
@@ -43,8 +47,10 @@ public class CharacterActions : MonoBehaviour
         Debug.Log("Got " + _colliders.Count + " coins");
         foreach (BoxCollider fCollider in _colliders)
         {
-            Destroy(fCollider.gameObject);
+            _gameState.PickUpCoin(fCollider.gameObject);
         }
+        
+        Debug.Log("New score: " + _gameState.GetCoins());
     }
 
     private void OnTriggerEnter(Collider other)
